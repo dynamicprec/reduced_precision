@@ -1,0 +1,28 @@
+net: "train_val_dynamic_ema_1000_batches_msra.prototxt"
+## The reduce database have 10000 test images
+## and the batch_size is 50 in the test phase, the iterations over
+## test database needs to be 200
+#test_iter: 200
+## The test interval could be each epoch. However we are going
+## to do this after the training process is finished. One epoch
+## with batch_size of 64 is equal to 4000. Remember that the
+## training dataset have 256000 images
+# test_interval: 4000
+test_initialization: false
+random_seed: 30
+display: 200
+base_lr: 0.05
+lr_policy: "multistep"
+## The step values defines where the learning rate is going to be
+## decrease taking into account the gamma and momentum values. In
+## this case we are going to change in epoch 30 and 60. The training
+## processes normally reach plateaus in this values. (30*5120 and 60*5120)
+stepvalue: 120000
+stepvalue: 240000
+gamma: 0.1
+max_iter: 360000
+momentum: 0.9
+weight_decay: 0.0001
+#snapshot: 4000
+snapshot_prefix: "dyn_ema_1000_batches_ema_4_fp32_res_50"
+solver_mode: CPU
